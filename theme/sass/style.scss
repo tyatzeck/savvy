@@ -1,3 +1,5 @@
+@import 'highlighting';
+@import 'fonts';
 @import 'base-vars';
 @import 'mixins';
 @import 'components';
@@ -5,16 +7,13 @@
 //baseline element styles
 
 body{
-    -webkit-font-smoothing: antialised;
-    background-color: $bg;
+    background: $bg;
+    background-image: linear-gradient( darken( $bg, 4% ), $bg, darken( $bg, 4% ) );
     margin:0;
 }
 
+
 h1{
-  font-size:4vw;
-  @media (max-width: 640px) {
-    font-size: 7vw;
-  }
     font-family:$tfont;
     font-weight: 700;
     color: $accent;
@@ -22,32 +21,19 @@ h1{
 }
 
 h2{
-    font-size:3vw;
-    @media (max-width: 640px) {
-      font-size: 5vw;
-    }
     font-family: $tfont;
     font-weight: 700;
-    line-height: 50%;
     color:$hl ;
     text-align: center;
 
 }
 h3{
-  font-size: 2.75vw;
-  @media (max-width: 640px) {
-    font-size: 3.75vw;
-  }
   font-family: $bfont;
   font-weight: 300;
   color: $hl;
 }
 
 h4{
-  font-size: 2vw;
-  @media (max-width: 640px) {
-    font-size: 3vw;
-  }
   font-family: $bfont;
   font-weight: 300;
   color: $hl;
@@ -55,7 +41,6 @@ h4{
 
 p {
     font-family: $tfont;
-    font-size: 2vw;
     color: $hl;
 }
 
@@ -72,7 +57,73 @@ hr{
     width:80%;
     opacity: 0.3;
 }
+button{
+    background-color: $accent-grey;
+    border-color: $accent-grey;
+    font-family: $bfont;
+    font-weight: 400;
+    font-size: $large;
+    height: auto;
 
+    &:hover{
+        background-color: $bgl;
+        border-color: $bgl;
+    }
+
+    &:focus{
+        background-color: $accent;
+        border-color: $accent;
+    }
+}
+blockquote{
+    border-left: solid 10px $accent;
+    opacity: 0.5;
+    margin-left: 0;
+    padding-left: 1rem;
+}
+
+figure{
+    box-shadow: 0 0 0.5rem rgba( 0, 0, 0, 0.3 ) inset;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 2.5rem 0;
+    overflow-x: auto;
+    code{
+        color: #888888;
+    }
+    pre{
+        margin: 0;
+    }
+}
+
+pre{
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    margin: 0;
+
+    > code {
+        padding: 1rem 0;
+    }
+}
+
+code{
+    background: transparent;
+    border-radius: 0;
+    font-size: $default;
+    color: #d8e09e;
+    padding: 0;
+    margin: 0;
+    white-space: inherit;
+}
+
+// helper classes
+.center{
+    text-align: center;
+}
+.circle{
+    border-radius: 50%;
+}
 // menubar and navigation styles
 @include navigation;
 
@@ -81,9 +132,8 @@ hr{
 .icon-bar{
     @include flexlist;
     margin: 0 auto;
-    font-size: 4rem;
-    align-items: baseline;
     text-align: center;
+
     li {
         @for $i from 1 through 3 {
             &:nth-child(#{$i}){
@@ -106,6 +156,9 @@ hr{
             }
         }
     }
+    p{
+        margin: 0;
+    }
 }
 
 .infobubbles{
@@ -119,28 +172,23 @@ hr{
 // main content and content wrapper styles
 
 #content-wrapper{
-    width:90%;
+    width:98%;
     max-width: 1200px;
     margin-left:auto;
     margin-right:auto;
 }
 
 #content{
-    padding-left:1.5vw;
-    padding-right:1.5vw;
-
     p, li{
         color: $hl;
-        font-size:2vw;
         font-weight:400;
         @media (max-width: 640px) {
-          font-size: 3.35vw;
           font-weight: 100;
         }
         font-family:$bfont;
 
         span[class^="ti-"] {
-          font-size: 4rem;
+          font-size: $icon-large;
         }
     }
     a{
@@ -158,6 +206,33 @@ hr{
           }
         }
     }
+    &.blog-post{
+      padding-top: 7em;
+
+      .subheading{
+          text-align: center;
+          margin-top: 0;
+      }
+      img{
+        width: 80vw;
+        margin: 2em auto;
+        &.floater{
+            width: 30%;
+            float: left;
+            margin: 0 1rem 1rem 0;
+        }
+      }
+
+      h1{
+          margin: 0;
+      }
+
+      h2{
+        &.post-title{
+          text-align: left;
+        }
+      }
+    }
 }
 
 .content-section{
@@ -165,6 +240,7 @@ hr{
   width:90%;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
 }
 
 // specific content section styles (in page order)
@@ -189,8 +265,14 @@ hr{
 //wufoo-based contact form
 @include contact;
 
+//disqus comments
+@include disqus;
+
 // footer styles
 @include footer;
 
 /*FAQ-specific styling*/
 @include faq;
+
+// people page-specfic styles
+@include people;
